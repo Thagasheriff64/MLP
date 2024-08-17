@@ -86,8 +86,8 @@ def main():
         data_df= pd.DataFrame(data,columns=column)
         st.write(data_df)
 
-        preprocessor = joblib.load(r"preprocessor\preprocessor.joblib")
-        model = joblib.load(r"models\model.joblib")
+        preprocessor = joblib.load(r'preprocessor\preprocessor.joblib')
+        model = joblib.load(r'models\model.joblib')
 
         x_test_transform = preprocessor.transform(data_df)
         pred = model.predict(x_test_transform)
