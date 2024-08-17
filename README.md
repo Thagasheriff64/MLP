@@ -1,3 +1,6 @@
+# The app link
+https://thagasheriff64-mlp-app-evr9bc.streamlit.app/
+
 # MLP
 
 Recipe for Rating: Predict Food Ratings using ML
