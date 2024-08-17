@@ -3,6 +3,7 @@ import pandas as pd
 import joblib
 from sklearn.linear_model import LogisticRegression
 from lightgbm import LGBMClassifier
+import os
 
 #streamlit run app.py
 def main():
@@ -86,12 +87,24 @@ def main():
         data_df= pd.DataFrame(data,columns=column)
         st.write(data_df)
 
-        preprocessor = joblib.load(r'preprocessor\preprocessor.joblib')
-        model = joblib.load(r'models\model.joblib')
+         # Load the preprocessor and model
+        preprocessor_path = os.path.join('preprocessor', 'preprocessor.joblib')
+        model_path = os.path.join('models', 'model.joblib')
 
-        x_test_transform = preprocessor.transform(data_df)
-        pred = model.predict(x_test_transform)
-        #clst.write(pred)
-        st.markdown(f'<h1> Prediction for the data is : {pred} </h1>')
+        #st.write("Preprocessor path:", preprocessor_path)
+        #st.write("Model path:", model_path)
+
+        if os.path.exists(preprocessor_path) and os.path.exists(model_path):
+            preprocessor = joblib.load(preprocessor_path)
+            model = joblib.load(model_path)
+
+            # Transform and predict
+            x_test_transform = preprocessor.transform(data_df)
+            pred = model.predict(x_test_transform)
+
+            st.markdown(f'<h1> Prediction for the data is : {pred} </h1>', unsafe_allow_html=True)
+        else:
+            st.write("Preprocessor or model file not found. Please check the file paths.")
+        #st.markdown(f'<h1> Prediction for the data is : {pred} </h1>')
 if __name__  == "__main__":
     main()
